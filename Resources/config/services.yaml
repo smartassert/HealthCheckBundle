@@ -5,14 +5,21 @@ services:
     autowire: true
     autoconfigure: true
 
-  SmartAssert\DoctrineInspectors\EntityMappingInspector:
-  SmartAssert\InvokableLogger\ExceptionLogger:
   SmartAssert\DoctrineInspectors\QueryInspector:
+    tags:
+      - { name: 'health_check_bundle.component_inspector', key: 'database_connection' }
+
+  SmartAssert\DoctrineInspectors\EntityMappingInspector:
+    tags:
+      - { name: 'health_check_bundle.component_inspector', key: 'database_entities' }
+
+  SmartAssert\InvokableLogger\ExceptionLogger:
+    tags:
+      - { name: 'health_check_bundle.exception_logger', key: 'database_entities' }
 
   SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - addExceptionHandler: ['@SmartAssert\InvokableLogger\ExceptionLogger']
-      - setComponentInspector: ['database_connection', '@SmartAssert\DoctrineInspectors\QueryInspector']
-      - setComponentInspector: ['database_entities', '@SmartAssert\DoctrineInspectors\EntityMappingInspector']
+      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector', index_by: 'key' }]
+      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger', index_by: 'key' }]

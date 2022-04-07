@@ -21,12 +21,4 @@ abstract class AbstractBaseFunctionalTest extends TestCase
 
         $this->container = $kernel->getContainer();
     }
-
-    /**
-     * @param class-string $serviceClass
-     */
-    protected function assertServiceExistsInContainer(string $serviceClass): void
-    {
-        self::assertInstanceOf($serviceClass, $this->container->get($serviceClass));
-    }
 }

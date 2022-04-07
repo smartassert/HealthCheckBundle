@@ -1,6 +1,12 @@
+imports:
+  - { resource: services_test_doctrine.yaml }
+
 parameters:
 
 services:
   _defaults:
     autowire: true
     autoconfigure: true
+
+  Psr\Log\LoggerInterface:
+    class: SmartAssert\HealthCheckBundle\Tests\Services\Logger

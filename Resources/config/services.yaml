@@ -5,14 +5,14 @@ services:
     autowire: true
     autoconfigure: true
 
-    SmartAssert\DoctrineInspectors\EntityMappingInspector: ~
-    SmartAssert\InvokableLogger\ExceptionLogger:
-    SmartAssert\DoctrineInspectors\QueryInspector:
+  SmartAssert\DoctrineInspectors\EntityMappingInspector:
+  SmartAssert\InvokableLogger\ExceptionLogger:
+  SmartAssert\DoctrineInspectors\QueryInspector:
 
-    SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
-      class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
-      public: true
-      calls:
-        - addExceptionHandler: ['@SmartAssert\InvokableLogger\ExceptionLogger']
-        - setComponentInspector: ['database_connection', '@SmartAssert\DoctrineInspectors\QueryInspector']
-        - setComponentInspector: ['database_entities', '@SmartAssert\DoctrineInspectors\EntityMappingInspector']
+  SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
+    class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
+    public: true
+    calls:
+      - addExceptionHandler: ['@SmartAssert\InvokableLogger\ExceptionLogger']
+      - setComponentInspector: ['database_connection', '@SmartAssert\DoctrineInspectors\QueryInspector']
+      - setComponentInspector: ['database_entities', '@SmartAssert\DoctrineInspectors\EntityMappingInspector']

@@ -1,0 +1,35 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Doctrine\DBAL\Driver:
+    class: Doctrine\DBAL\Driver\PDO\SQLite\Driver
+
+  Doctrine\DBAL\Connection:
+    arguments:
+      $params:
+        url: 'sqlite:///:memory:'
+
+  Doctrine\Common\Annotations\Reader:
+    class: Doctrine\Common\Annotations\AnnotationReader
+
+  Doctrine\Persistence\Mapping\Driver\MappingDriver:
+    class: Doctrine\ORM\Mapping\Driver\AnnotationDriver
+    arguments:
+      $reader: '@Doctrine\Common\Annotations\Reader'
+
+  Doctrine\ORM\Configuration:
+    calls:
+      - setMetadataDriverImpl: [ '@Doctrine\Persistence\Mapping\Driver\MappingDriver' ]
+      - setProxyDir: [ '../../var/cache/test' ]
+      - setProxyNamespace: [ 'Proxies' ]
+
+  Doctrine\ORM\EntityManagerInterface:
+    class: Doctrine\ORM\EntityManager
+    factory: ['Doctrine\ORM\EntityManager', 'create']
+    arguments:
+      $connection: '@Doctrine\DBAL\Connection'
+
+  Doctrine\Persistence\ManagerRegistry: ~

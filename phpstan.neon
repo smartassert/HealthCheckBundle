@@ -5,3 +5,7 @@ parameters:
     - Services
     - Tests
   inferPrivatePropertyTypeFromConstructor: true
+  ignoreErrors:
+    -
+      message: '#.*#'
+      path: Tests/Services/EntityManager.php

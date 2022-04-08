@@ -19,7 +19,7 @@ class HealthCheckControllerTest extends AbstractBaseFunctionalTest
         $this->kernelBrowser = new KernelBrowser($this->kernel);
     }
 
-    public function testFoo(): void
+    public function testGet(): void
     {
         $router = $this->kernel->getContainer()->get('health_check_bundle.test.public_router');
         self::assertInstanceOf(RouterInterface::class, $router);

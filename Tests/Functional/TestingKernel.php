@@ -34,6 +34,6 @@ class TestingKernel extends Kernel
 
     protected function getConfigDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir') . '/Resources/config';
+        return (string) realpath(__DIR__ . '/../../Resources/config');
     }
 }

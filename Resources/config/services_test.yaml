@@ -10,3 +10,7 @@ services:
 
   Doctrine\ORM\EntityManagerInterface:
     class: SmartAssert\HealthCheckBundle\Tests\Services\EntityManager
+
+  health_check_bundle.test.public_router:
+    alias: Symfony\Component\Routing\RouterInterface
+    public: true

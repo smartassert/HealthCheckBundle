@@ -1,0 +1,3 @@
+health-check:
+  path: '%health_check_bundle_route_path%'
+  controller: SmartAssert\HealthCheckBundle\Controller\HealthCheckController::get

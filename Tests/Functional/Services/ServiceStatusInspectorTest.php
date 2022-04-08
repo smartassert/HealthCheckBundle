@@ -6,6 +6,7 @@ namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 
 use SmartAssert\DoctrineInspectors\EntityMappingInspector;
 use SmartAssert\DoctrineInspectors\QueryInspector;
+use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspector;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 use webignition\ObjectReflector\ObjectReflector;
@@ -18,14 +19,14 @@ class ServiceStatusInspectorTest extends AbstractBaseFunctionalTest
     {
         parent::setUp();
 
-        $serviceStatusInspector = $this->container->get(ServiceStatusInspectorInterface::class);
+        $serviceStatusInspector = $this->kernel->getContainer()->get(ServiceStatusInspectorInterface::class);
         \assert($serviceStatusInspector instanceof ServiceStatusInspectorInterface);
         $this->serviceStatusInspector = $serviceStatusInspector;
     }
 
     public function testServiceIsRetrievedFromContainer(): void
     {
-        $service = $this->container->get(ServiceStatusInspectorInterface::class);
+        $service = $this->kernel->getContainer()->get(ServiceStatusInspectorInterface::class);
 
         self::assertInstanceOf(ServiceStatusInspectorInterface::class, $service);
         self::assertInstanceOf(ServiceStatusInspector::class, $service);

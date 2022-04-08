@@ -1,9 +1,13 @@
 parameters:
+  health_check_bundle_route_path: '/health-check'
 
 services:
   _defaults:
     autowire: true
     autoconfigure: true
+
+  SmartAssert\HealthCheckBundle\Controller\HealthCheckController:
+    tags: ['controller.service_arguments']
 
   SmartAssert\DoctrineInspectors\QueryInspector:
     tags:

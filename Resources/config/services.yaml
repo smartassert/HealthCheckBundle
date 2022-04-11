@@ -9,17 +9,32 @@ services:
   SmartAssert\HealthCheckBundle\Controller\HealthCheckController:
     tags: ['controller.service_arguments']
 
-  SmartAssert\DoctrineInspectors\QueryInspector:
-    tags:
-      - { name: 'health_check_bundle.component_inspector', key: 'database_connection' }
+  SmartAssert\DoctrineInspectors\QueryInspector: ~
+  SmartAssert\DoctrineInspectors\EntityMappingInspector: ~
 
-  SmartAssert\DoctrineInspectors\EntityMappingInspector:
+  smartassert.health_check_bundle.doctrine_inspectors.query:
+    class: SmartAssert\HealthCheckBundle\Services\DoctrineInspector
+    arguments:
+      $inspector: '@SmartAssert\DoctrineInspectors\QueryInspector'
+      $identifier: 'database_connection'
     tags:
-      - { name: 'health_check_bundle.component_inspector', key: 'database_entities' }
+      - { name: 'health_check_bundle.component_inspector' }
 
-  SmartAssert\InvokableLogger\ExceptionLogger:
+  smartassert.health_check_bundle.doctrine_inspectors.entity_mapping:
+    class: SmartAssert\HealthCheckBundle\Services\DoctrineInspector
+    arguments:
+      $inspector: '@SmartAssert\DoctrineInspectors\EntityMappingInspector'
+      $identifier: 'database_entities'
     tags:
-      - { name: 'health_check_bundle.exception_logger', key: 'database_entities' }
+      - { name: 'health_check_bundle.component_inspector' }
+
+  SmartAssert\InvokableLogger\ExceptionLogger: ~
+
+  SmartAssert\HealthCheckBundle\Services\ExceptionLogger:
+    arguments:
+      $invokableExceptionLogger: '@SmartAssert\InvokableLogger\ExceptionLogger'
+    tags:
+      - { name: 'health_check_bundle.exception_logger' }
 
   SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector

@@ -1,5 +1,6 @@
 parameters:
-  health_check_bundle_route_path: '/health-check'
+  health_check_bundle_health_check_path: '/health-check'
+  health_check_bundle_status_path: '/status'
 
 services:
   _defaults:

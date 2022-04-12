@@ -1,6 +1,9 @@
 parameters:
   health_check_bundle_health_check_path: '/health-check'
   health_check_bundle_status_path: '/status'
+  health_check_bundle.enable_status_readiness_inspector: '%env(bool:HEALTH_CHECK_BUNDLE_ENABLE_STATUS_READINESS_INSPECTOR)%'
+  env(HEALTH_CHECK_BUNDLE_ENABLE_STATUS_READINESS_INSPECTOR): '0'
+  env(HEALTH_CHECK_BUNDLE_STATUS_IS_READY): '0'
 
 services:
   _defaults:
@@ -58,3 +61,9 @@ services:
     calls:
       - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
       - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]
+
+  smartassert.health_check_bundle.component_inspectors.readiness:
+    class: SmartAssert\ServiceStatusInspector\ComponentInspector
+    arguments:
+      $identifier: 'ready'
+      $isAvailable: '%env(bool:HEALTH_CHECK_BUNDLE_STATUS_IS_READY)%'

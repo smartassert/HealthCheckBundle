@@ -32,6 +32,23 @@ class StatusControllerTest extends AbstractBaseFunctionalTest
 
         $responseData = json_decode((string) $response->getContent(), true);
         self::assertIsArray($responseData);
-        self::assertSame(['service1' => true, 'service2' => false], $responseData);
+
+        var_dump($this->getExpectedResponseData());
+
+        self::assertEquals($this->getExpectedResponseData(), $responseData);
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    private function getExpectedResponseData(): array
+    {
+        $expectedResponseData = ['service1' => true, 'service2' => false];
+
+        if (($_ENV['HEALTH_CHECK_BUNDLE_ENABLE_STATUS_READINESS_INSPECTOR'] ?? false)) {
+            $expectedResponseData['ready'] = false;
+        }
+
+        return $expectedResponseData;
     }
 }

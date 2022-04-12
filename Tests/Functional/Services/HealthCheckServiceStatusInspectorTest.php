@@ -74,7 +74,7 @@ class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
         $inspector->isAvailable();
     }
 
-    public function testInvokeServiceStatusInspector(): void
+    public function testGet(): void
     {
         self::assertSame(
             ['database_connection' => true, 'database_entities' => true],

@@ -27,8 +27,11 @@ class ServiceStatusInspectorTest extends AbstractBaseFunctionalTest
     public function serviceIsRetrievedFromContainerDataProvider(): array
     {
         return [
-            'health check' => [
+            'health_check' => [
                 'serviceId' => 'smartassert.health_check_bundle.service_status_inspector.health_check',
+            ],
+            'status' => [
+                'serviceId' => 'smartassert.health_check_bundle.service_status_inspector.status',
             ],
         ];
     }

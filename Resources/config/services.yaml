@@ -11,6 +11,11 @@ services:
       $serviceStatusInspector: '@smartassert.health_check_bundle.service_status_inspector.health_check'
     tags: ['controller.service_arguments']
 
+  SmartAssert\HealthCheckBundle\Controller\StatusController:
+    arguments:
+      $serviceStatusInspector: '@smartassert.health_check_bundle.service_status_inspector.status'
+    tags: ['controller.service_arguments']
+
   SmartAssert\DoctrineInspectors\QueryInspector: ~
   SmartAssert\DoctrineInspectors\EntityMappingInspector: ~
 
@@ -37,6 +42,7 @@ services:
       $invokableExceptionLogger: '@SmartAssert\InvokableLogger\ExceptionLogger'
     tags:
       - { name: 'health_check_bundle.exception_logger.health_check' }
+      - { name: 'health_check_bundle.exception_logger.status' }
 
   smartassert.health_check_bundle.service_status_inspector.health_check:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
@@ -44,3 +50,10 @@ services:
     calls:
       - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.health_check' }]
       - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.health_check' }]
+
+  smartassert.health_check_bundle.service_status_inspector.status:
+    class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
+    public: true
+    calls:
+      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
+      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]

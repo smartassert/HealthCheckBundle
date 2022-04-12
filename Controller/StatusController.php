@@ -9,8 +9,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class StatusController
 {
-    public function get(ServiceStatusInspectorInterface $serviceStatusInspector): JsonResponse
+    public function __construct(
+        private readonly ServiceStatusInspectorInterface $serviceStatusInspector,
+    ) {
+    }
+
+    public function get(): JsonResponse
     {
-        return new JsonResponse($serviceStatusInspector->get());
+        return new JsonResponse($this->serviceStatusInspector->get());
     }
 }

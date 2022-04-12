@@ -4,88 +4,35 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 
-use SmartAssert\DoctrineInspectors\EntityMappingInspector;
-use SmartAssert\DoctrineInspectors\QueryInspector;
-use SmartAssert\HealthCheckBundle\Services\DoctrineInspector;
 use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspector;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
-use webignition\ObjectReflector\ObjectReflector;
 
 class ServiceStatusInspectorTest extends AbstractBaseFunctionalTest
 {
-    private ServiceStatusInspectorInterface $serviceStatusInspector;
-
-    protected function setUp(): void
+    /**
+     * @dataProvider serviceIsRetrievedFromContainerDataProvider
+     */
+    public function testServiceIsRetrievedFromContainer(string $serviceId): void
     {
-        parent::setUp();
-
-        $serviceStatusInspector = $this->kernel->getContainer()->get(ServiceStatusInspectorInterface::class);
-        \assert($serviceStatusInspector instanceof ServiceStatusInspectorInterface);
-        $this->serviceStatusInspector = $serviceStatusInspector;
-    }
-
-    public function testServiceIsRetrievedFromContainer(): void
-    {
-        $service = $this->kernel->getContainer()->get(ServiceStatusInspectorInterface::class);
+        $service = $this->kernel->getContainer()->get($serviceId);
 
         self::assertInstanceOf(ServiceStatusInspectorInterface::class, $service);
         self::assertInstanceOf(ServiceStatusInspector::class, $service);
     }
 
-    public function testDefaultConfiguration(): void
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function serviceIsRetrievedFromContainerDataProvider(): array
     {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
-        self::assertIsArray($componentInspectors);
-        self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
-
-        $databaseConnectionInspector = $componentInspectors['database_connection'];
-        self::assertInstanceOf(DoctrineInspector::class, $databaseConnectionInspector);
-
-        $databaseConnectionInspectorInner = $databaseConnectionInspector->getInner();
-        self::assertInstanceOf(QueryInspector::class, $databaseConnectionInspectorInner);
-        self::assertSame('SELECT 1', ObjectReflector::getProperty($databaseConnectionInspectorInner, 'query'));
-
-        $databaseEntitiesInspector = $componentInspectors['database_entities'];
-        self::assertInstanceOf(DoctrineInspector::class, $databaseEntitiesInspector);
-        self::assertInstanceOf(EntityMappingInspector::class, $databaseEntitiesInspector->getInner());
-    }
-
-    public function testDatabaseConnectionInspector(): void
-    {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
-        self::assertIsArray($componentInspectors);
-        self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
-
-        $inspector = $componentInspectors['database_connection'];
-        self::assertInstanceOf(DoctrineInspector::class, $inspector);
-
-        $inspectorInner = $inspector->getInner();
-        self::assertInstanceOf(QueryInspector::class, $inspectorInner);
-
-        $inspector->isAvailable();
-    }
-
-    public function testDatabaseEntitiesInspector(): void
-    {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
-        self::assertIsArray($componentInspectors);
-        self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
-
-        $inspector = $componentInspectors['database_entities'];
-        self::assertInstanceOf(DoctrineInspector::class, $inspector);
-
-        $inspectorInner = $inspector->getInner();
-        self::assertInstanceOf(EntityMappingInspector::class, $inspectorInner);
-
-        $inspector->isAvailable();
-    }
-
-    public function testInvokeServiceStatusInspector(): void
-    {
-        self::assertSame(
-            ['database_connection' => true, 'database_entities' => true],
-            $this->serviceStatusInspector->get()
-        );
+        return [
+            'health_check' => [
+                'serviceId' => 'smartassert.health_check_bundle.service_status_inspector.health_check',
+            ],
+            'status' => [
+                'serviceId' => 'smartassert.health_check_bundle.service_status_inspector.status',
+            ],
+        ];
     }
 }

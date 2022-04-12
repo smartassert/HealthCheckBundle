@@ -1,5 +1,6 @@
 parameters:
-  health_check_bundle_route_path: '/health-check'
+  health_check_bundle_health_check_path: '/health-check'
+  health_check_bundle_status_path: '/status'
 
 services:
   _defaults:
@@ -7,6 +8,13 @@ services:
     autoconfigure: true
 
   SmartAssert\HealthCheckBundle\Controller\HealthCheckController:
+    arguments:
+      $serviceStatusInspector: '@smartassert.health_check_bundle.service_status_inspector.health_check'
+    tags: ['controller.service_arguments']
+
+  SmartAssert\HealthCheckBundle\Controller\StatusController:
+    arguments:
+      $serviceStatusInspector: '@smartassert.health_check_bundle.service_status_inspector.status'
     tags: ['controller.service_arguments']
 
   SmartAssert\DoctrineInspectors\QueryInspector: ~
@@ -18,7 +26,7 @@ services:
       $inspector: '@SmartAssert\DoctrineInspectors\QueryInspector'
       $identifier: 'database_connection'
     tags:
-      - { name: 'health_check_bundle.component_inspector' }
+      - { name: 'health_check_bundle.component_inspector.health_check' }
 
   smartassert.health_check_bundle.doctrine_inspectors.entity_mapping:
     class: SmartAssert\HealthCheckBundle\Services\DoctrineInspector
@@ -26,7 +34,7 @@ services:
       $inspector: '@SmartAssert\DoctrineInspectors\EntityMappingInspector'
       $identifier: 'database_entities'
     tags:
-      - { name: 'health_check_bundle.component_inspector' }
+      - { name: 'health_check_bundle.component_inspector.health_check' }
 
   SmartAssert\InvokableLogger\ExceptionLogger: ~
 
@@ -34,11 +42,19 @@ services:
     arguments:
       $invokableExceptionLogger: '@SmartAssert\InvokableLogger\ExceptionLogger'
     tags:
-      - { name: 'health_check_bundle.exception_logger' }
+      - { name: 'health_check_bundle.exception_logger.health_check' }
+      - { name: 'health_check_bundle.exception_logger.status' }
 
-  SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
+  smartassert.health_check_bundle.service_status_inspector.health_check:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector', index_by: 'key' }]
-      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger', index_by: 'key' }]
+      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.health_check' }]
+      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.health_check' }]
+
+  smartassert.health_check_bundle.service_status_inspector.status:
+    class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
+    public: true
+    calls:
+      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
+      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]

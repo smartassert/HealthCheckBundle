@@ -7,6 +7,8 @@ services:
     autoconfigure: true
 
   SmartAssert\HealthCheckBundle\Controller\HealthCheckController:
+    arguments:
+      $serviceStatusInspector: '@smartassert.health_check_bundle.service_status_inspector.health_check'
     tags: ['controller.service_arguments']
 
   SmartAssert\DoctrineInspectors\QueryInspector: ~
@@ -36,7 +38,7 @@ services:
     tags:
       - { name: 'health_check_bundle.exception_logger' }
 
-  SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface:
+  smartassert.health_check_bundle.service_status_inspector.health_check:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:

@@ -9,11 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HealthCheckController
 {
-    public function get(ServiceStatusInspectorInterface $serviceStatusInspector): JsonResponse
+    public function __construct(
+        private readonly ServiceStatusInspectorInterface $serviceStatusInspector,
+    ) {
+    }
+
+    public function get(): JsonResponse
     {
         return new JsonResponse(
-            $serviceStatusInspector->get(),
-            $serviceStatusInspector->isAvailable() ? 200 : 503
+            $this->serviceStatusInspector->get(),
+            $this->serviceStatusInspector->isAvailable() ? 200 : 503
         );
     }
 }

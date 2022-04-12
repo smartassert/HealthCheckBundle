@@ -23,17 +23,20 @@ class StatusServiceStatusInspectorTest extends AbstractBaseFunctionalTest
         $this->serviceStatusInspector = $serviceStatusInspector;
     }
 
-    public function testDefaultConfiguration(): void
+    public function testDefaultTestConfiguration(): void
     {
         $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
         self::assertIsArray($componentInspectors);
-        self::assertSame([], array_keys($componentInspectors));
+        self::assertSame(['service1', 'service2'], array_keys($componentInspectors));
     }
 
     public function testGet(): void
     {
         self::assertSame(
-            [],
+            [
+                'service1' => true,
+                'service2' => false,
+            ],
             $this->serviceStatusInspector->get()
         );
     }

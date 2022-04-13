@@ -15,9 +15,9 @@ class TestingKernel extends Kernel
 {
     use MicroKernelTrait;
 
-    public function __construct()
+    public function __construct(string $environment)
     {
-        parent::__construct('test', true);
+        parent::__construct($environment, true);
     }
 
     /**

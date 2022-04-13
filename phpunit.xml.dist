@@ -16,7 +16,6 @@
 >
   <php>
     <env name="APP_ENV" value="test" />
-    <env name="HEALTH_CHECK_BUNDLE_ENABLE_STATUS_READINESS_INSPECTOR" value="0" />
   </php>
 
   <coverage includeUncoveredFiles="false" processUncoveredFiles="false">

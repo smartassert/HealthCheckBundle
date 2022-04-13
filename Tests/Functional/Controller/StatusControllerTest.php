@@ -5,18 +5,24 @@ declare(strict_types=1);
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Controller;
 
 use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
+use SmartAssert\HealthCheckBundle\Tests\Services\ExpectedStatusOutputFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\Routing\RouterInterface;
 
 class StatusControllerTest extends AbstractBaseFunctionalTest
 {
     private KernelBrowser $kernelBrowser;
+    private ExpectedStatusOutputFactory $expectedStatusOutputFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->kernelBrowser = new KernelBrowser($this->kernel);
+
+        $expectedStatusOutputFactory = $this->kernel->getContainer()->get(ExpectedStatusOutputFactory::class);
+        \assert($expectedStatusOutputFactory instanceof ExpectedStatusOutputFactory);
+        $this->expectedStatusOutputFactory = $expectedStatusOutputFactory;
     }
 
     public function testGet(): void
@@ -32,6 +38,7 @@ class StatusControllerTest extends AbstractBaseFunctionalTest
 
         $responseData = json_decode((string) $response->getContent(), true);
         self::assertIsArray($responseData);
-        self::assertSame(['service1' => true, 'service2' => false], $responseData);
+
+        self::assertEquals($this->expectedStatusOutputFactory->getExpectedComponentAvailabilities(), $responseData);
     }
 }

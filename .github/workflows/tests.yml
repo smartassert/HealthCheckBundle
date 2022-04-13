@@ -28,5 +28,15 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run tests
+      - name: Run tests without readiness check enabled
+        run: composer test
+
+      - name: Run tests with readiness check enabled and false
+        env:
+          APP_ENV: test_readiness_inspector_enabled_and_false
+        run: composer test
+
+      - name: Run tests with readiness check enabled and true
+        env:
+          APP_ENV: test_readiness_inspector_enabled_and_true
         run: composer test

@@ -1,6 +1,8 @@
 parameters:
   health_check_bundle_health_check_path: '/health-check'
   health_check_bundle_status_path: '/status'
+  health_check_bundle_enable_status_readiness_inspector: false
+  health_check_bundle_status_is_ready: false
 
 services:
   _defaults:
@@ -59,34 +61,28 @@ services:
       - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
       - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]
 
-when@test:
-  services:
-    _defaults:
-      autowire: true
-      autoconfigure: true
+  smartassert.health_check_bundle.component_inspectors.readiness:
+    class: SmartAssert\ServiceStatusInspector\ComponentInspector
+    arguments:
+      $identifier: 'ready'
+      $isAvailable: '%health_check_bundle_status_is_ready%'
 
-    Psr\Log\LoggerInterface:
-      class: SmartAssert\HealthCheckBundle\Tests\Services\Logger
+when@test*:
+  imports:
+    - { resource: services_test.yaml }
 
-    Doctrine\ORM\EntityManagerInterface:
-      class: SmartAssert\HealthCheckBundle\Tests\Services\EntityManager
+when@test_readiness_inspector_enabled_and_false:
+  imports:
+    - { resource: services_test.yaml }
 
-    health_check_bundle.test.public_router:
-      alias: Symfony\Component\Routing\RouterInterface
-      public: true
+  parameters:
+    health_check_bundle_enable_status_readiness_inspector: true
+    health_check_bundle_status_is_ready: false
 
-    health_check_bundle.test.status_inspector.service1:
-      class: SmartAssert\ServiceStatusInspector\ComponentInspector
-      arguments:
-        $identifier: 'service1'
-        $isAvailable: true
-      tags:
-        - { name: 'health_check_bundle.component_inspector.status' }
+when@test_readiness_inspector_enabled_and_true:
+  imports:
+    - { resource: services_test.yaml }
 
-    health_check_bundle.test.status_inspector.service2:
-      class: SmartAssert\ServiceStatusInspector\ComponentInspector
-      arguments:
-        $identifier: 'service2'
-        $isAvailable: false
-      tags:
-        - { name: 'health_check_bundle.component_inspector.status' }
+  parameters:
+    health_check_bundle_enable_status_readiness_inspector: true
+    health_check_bundle_status_is_ready: true

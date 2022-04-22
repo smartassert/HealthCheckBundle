@@ -14,18 +14,18 @@ services:
     public: true
 
   health_check_bundle.test.status_inspector.service1:
-    class: SmartAssert\ServiceStatusInspector\ComponentInspector
+    class: SmartAssert\ServiceStatusInspector\ComponentStatusInspector
     arguments:
       $identifier: 'service1'
-      $isAvailable: true
+      $status: true
     tags:
       - { name: 'health_check_bundle.component_inspector.status' }
 
   health_check_bundle.test.status_inspector.service2:
-    class: SmartAssert\ServiceStatusInspector\ComponentInspector
+    class: SmartAssert\ServiceStatusInspector\ComponentStatusInspector
     arguments:
       $identifier: 'service2'
-      $isAvailable: false
+      $status: false
     tags:
       - { name: 'health_check_bundle.component_inspector.status' }
 
@@ -34,3 +34,4 @@ services:
     arguments:
       $environment: '%env(APP_ENV)%'
       $isReadyParameter: '%health_check_bundle_status_is_ready%'
+      $versionParameter: '%health_check_bundle_status_version%'

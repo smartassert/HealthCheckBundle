@@ -6,9 +6,9 @@ namespace SmartAssert\HealthCheckBundle\Services;
 
 use SmartAssert\DoctrineInspectors\EntityMappingInspector;
 use SmartAssert\DoctrineInspectors\QueryInspector;
-use SmartAssert\ServiceStatusInspector\ComponentInspectorInterface;
+use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class DoctrineInspector implements ComponentInspectorInterface
+class DoctrineInspector implements ComponentStatusInspectorInterface
 {
     public function __construct(
         private readonly EntityMappingInspector|QueryInspector $inspector,
@@ -16,7 +16,7 @@ class DoctrineInspector implements ComponentInspectorInterface
     ) {
     }
 
-    public function isAvailable(): bool
+    public function getStatus(): bool
     {
         ($this->inspector)();
 

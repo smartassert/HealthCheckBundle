@@ -31,7 +31,7 @@ class StatusServiceStatusInspectorTest extends AbstractBaseFunctionalTest
 
     public function testDefaultTestConfiguration(): void
     {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
+        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentStatusInspectors');
         self::assertIsArray($componentInspectors);
 
         $componentNames = array_values(array_keys($componentInspectors));

@@ -28,7 +28,7 @@ class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
 
     public function testDefaultConfiguration(): void
     {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
+        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentStatusInspectors');
         self::assertIsArray($componentInspectors);
         self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
 
@@ -46,7 +46,7 @@ class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
 
     public function testDatabaseConnectionInspector(): void
     {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
+        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentStatusInspectors');
         self::assertIsArray($componentInspectors);
         self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
 
@@ -56,12 +56,12 @@ class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
         $inspectorInner = $inspector->getInner();
         self::assertInstanceOf(QueryInspector::class, $inspectorInner);
 
-        $inspector->isAvailable();
+        $inspector->getStatus();
     }
 
     public function testDatabaseEntitiesInspector(): void
     {
-        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentInspectors');
+        $componentInspectors = ObjectReflector::getProperty($this->serviceStatusInspector, 'componentStatusInspectors');
         self::assertIsArray($componentInspectors);
         self::assertSame(['database_connection', 'database_entities'], array_keys($componentInspectors));
 
@@ -71,7 +71,7 @@ class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
         $inspectorInner = $inspector->getInner();
         self::assertInstanceOf(EntityMappingInspector::class, $inspectorInner);
 
-        $inspector->isAvailable();
+        $inspector->getStatus();
     }
 
     public function testGet(): void

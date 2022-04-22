@@ -31,12 +31,17 @@ jobs:
       - name: Run tests without readiness check enabled
         run: composer test
 
-      - name: Run tests with readiness check enabled and false
+      - name: Run tests with readiness inspector enabled and false
         env:
           APP_ENV: test_readiness_inspector_enabled_and_false
         run: composer test
 
-      - name: Run tests with readiness check enabled and true
+      - name: Run tests with readiness inspector enabled and true
         env:
           APP_ENV: test_readiness_inspector_enabled_and_true
+        run: composer test
+
+      - name: Run tests with version inspector enabled and true
+        env:
+          APP_ENV: test_version_inspector_enabled
         run: composer test

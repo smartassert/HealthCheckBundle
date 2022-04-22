@@ -17,6 +17,7 @@ class ExpectedStatusOutputFactory
     public function __construct(
         private readonly string $environment,
         private readonly bool $isReadyParameter,
+        private readonly string $versionParameter,
     ) {
     }
 
@@ -27,28 +28,42 @@ class ExpectedStatusOutputFactory
     {
         $componentNames = array_keys($this->testComponentAvailabilities);
 
-        if (false === $this->isDefaultTestEnvironment()) {
+        if ($this->isReadinessInspectorTestEnvironment()) {
             $componentNames[] = 'ready';
+        }
+
+        if ($this->isVersionInspectorTestEnvironment()) {
+            $componentNames[] = 'version';
         }
 
         return $componentNames;
     }
 
     /**
-     * @return array<string, bool>
+     * @return array<string, bool|string>
      */
     public function getExpectedComponentAvailabilities(): array
     {
         $availabilities = $this->testComponentAvailabilities;
-        if (false === $this->isDefaultTestEnvironment()) {
+
+        if ($this->isReadinessInspectorTestEnvironment()) {
             $availabilities['ready'] = $this->isReadyParameter;
+        }
+
+        if ($this->isVersionInspectorTestEnvironment()) {
+            $availabilities['version'] = $this->versionParameter;
         }
 
         return $availabilities;
     }
 
-    private function isDefaultTestEnvironment(): bool
+    private function isReadinessInspectorTestEnvironment(): bool
     {
-        return 'test' === $this->environment;
+        return str_starts_with($this->environment, 'test_readiness_inspector');
+    }
+
+    private function isVersionInspectorTestEnvironment(): bool
+    {
+        return 'test_version_inspector_enabled' === $this->environment;
     }
 }

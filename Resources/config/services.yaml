@@ -3,6 +3,8 @@ parameters:
   health_check_bundle_status_path: '/status'
   health_check_bundle_enable_status_readiness_inspector: false
   health_check_bundle_status_is_ready: false
+  health_check_bundle_enable_status_version_inspector: false
+  health_check_bundle_status_version: ''
 
 services:
   _defaults:
@@ -51,21 +53,27 @@ services:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.health_check' }]
+      - setComponentStatusInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.health_check' }]
       - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.health_check' }]
 
   smartassert.health_check_bundle.service_status_inspector.status:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - setComponentInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
+      - setComponentStatusInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
       - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]
 
   smartassert.health_check_bundle.component_inspectors.readiness:
-    class: SmartAssert\ServiceStatusInspector\ComponentInspector
+    class: SmartAssert\ServiceStatusInspector\ComponentStatusInspector
     arguments:
       $identifier: 'ready'
-      $isAvailable: '%health_check_bundle_status_is_ready%'
+      $status: '%health_check_bundle_status_is_ready%'
+
+  smartassert.health_check_bundle.component_inspectors.version:
+    class: SmartAssert\ServiceStatusInspector\ComponentStatusInspector
+    arguments:
+      $identifier: 'version'
+      $status: '%health_check_bundle_status_version%'
 
 when@test*:
   imports:
@@ -86,3 +94,11 @@ when@test_readiness_inspector_enabled_and_true:
   parameters:
     health_check_bundle_enable_status_readiness_inspector: true
     health_check_bundle_status_is_ready: true
+
+when@test_version_inspector_enabled:
+  imports:
+    - { resource: services_test.yaml }
+
+  parameters:
+    health_check_bundle_enable_status_version_inspector: true
+    health_check_bundle_status_version: '0.123'

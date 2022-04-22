@@ -34,6 +34,12 @@
         ],
         "static-analysis": "./vendor/bin/phpstan analyse --ansi",
         "test": "./vendor/bin/phpunit --colors=always",
+        "test-ci": [
+            "APP_ENV=test ./vendor/bin/phpunit --colors=always",
+            "APP_ENV=test_readiness_inspector_enabled_and_false ./vendor/bin/phpunit --colors=always",
+            "APP_ENV=test_readiness_inspector_enabled_and_true ./vendor/bin/phpunit --colors=always",
+            "APP_ENV=test_version_inspector_enabled ./vendor/bin/phpunit --colors=always"
+        ],
         "ci": [
             "@cs",
             "@static-analysis",

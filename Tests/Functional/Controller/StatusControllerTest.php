@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Controller;
 
-use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
+use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTestCase;
 use SmartAssert\HealthCheckBundle\Tests\Services\ExpectedStatusOutputFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\Routing\RouterInterface;
 
-class StatusControllerTest extends AbstractBaseFunctionalTest
+class StatusControllerTest extends AbstractBaseFunctionalTestCase
 {
     private KernelBrowser $kernelBrowser;
     private ExpectedStatusOutputFactory $expectedStatusOutputFactory;

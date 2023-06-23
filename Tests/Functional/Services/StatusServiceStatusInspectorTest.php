@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 
-use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
+use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTestCase;
 use SmartAssert\HealthCheckBundle\Tests\Services\ExpectedStatusOutputFactory;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 use webignition\ObjectReflector\ObjectReflector;
 
-class StatusServiceStatusInspectorTest extends AbstractBaseFunctionalTest
+class StatusServiceStatusInspectorTest extends AbstractBaseFunctionalTestCase
 {
     private ServiceStatusInspectorInterface $serviceStatusInspector;
     private ExpectedStatusOutputFactory $expectedStatusOutputFactory;

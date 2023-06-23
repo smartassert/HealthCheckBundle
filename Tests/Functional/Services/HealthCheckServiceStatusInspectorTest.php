@@ -7,11 +7,11 @@ namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 use SmartAssert\DoctrineInspectors\EntityMappingInspector;
 use SmartAssert\DoctrineInspectors\QueryInspector;
 use SmartAssert\HealthCheckBundle\Services\DoctrineInspector;
-use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
+use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTestCase;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 use webignition\ObjectReflector\ObjectReflector;
 
-class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTest
+class HealthCheckServiceStatusInspectorTest extends AbstractBaseFunctionalTestCase
 {
     private ServiceStatusInspectorInterface $serviceStatusInspector;
 

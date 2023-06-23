@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 
-use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTest;
+use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTestCase;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspector;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 
-class ServiceStatusInspectorTest extends AbstractBaseFunctionalTest
+class ServiceStatusInspectorTest extends AbstractBaseFunctionalTestCase
 {
     /**
      * @dataProvider serviceIsRetrievedFromContainerDataProvider
@@ -24,7 +24,7 @@ class ServiceStatusInspectorTest extends AbstractBaseFunctionalTest
     /**
      * @return array<string, array<string, string>>
      */
-    public function serviceIsRetrievedFromContainerDataProvider(): array
+    public static function serviceIsRetrievedFromContainerDataProvider(): array
     {
         return [
             'health_check' => [

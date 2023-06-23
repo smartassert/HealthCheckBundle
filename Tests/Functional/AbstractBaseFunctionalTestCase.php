@@ -7,7 +7,7 @@ namespace SmartAssert\HealthCheckBundle\Tests\Functional;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-abstract class AbstractBaseFunctionalTest extends TestCase
+abstract class AbstractBaseFunctionalTestCase extends TestCase
 {
     protected KernelInterface $kernel;
 

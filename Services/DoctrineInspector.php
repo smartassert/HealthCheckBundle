@@ -18,9 +18,7 @@ readonly class DoctrineInspector implements ComponentStatusInspectorInterface
 
     public function getStatus(): bool
     {
-        ($this->inspector)();
-
-        return true;
+        return $this->inspector->getStatus();
     }
 
     public function getIdentifier(): string

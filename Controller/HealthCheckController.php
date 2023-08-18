@@ -7,10 +7,10 @@ namespace SmartAssert\HealthCheckBundle\Controller;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class HealthCheckController
+readonly class HealthCheckController
 {
     public function __construct(
-        private readonly ServiceStatusInspectorInterface $serviceStatusInspector,
+        private ServiceStatusInspectorInterface $serviceStatusInspector,
     ) {
     }
 

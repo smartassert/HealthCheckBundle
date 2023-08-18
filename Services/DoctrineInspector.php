@@ -8,11 +8,11 @@ use SmartAssert\DoctrineInspectors\EntityMappingInspector;
 use SmartAssert\DoctrineInspectors\QueryInspector;
 use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class DoctrineInspector implements ComponentStatusInspectorInterface
+readonly class DoctrineInspector implements ComponentStatusInspectorInterface
 {
     public function __construct(
-        private readonly EntityMappingInspector|QueryInspector $inspector,
-        private readonly string $identifier,
+        private EntityMappingInspector|QueryInspector $inspector,
+        private string $identifier,
     ) {
     }
 

@@ -47,7 +47,7 @@
         ]
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-json": "*",
         "doctrine/orm": "^2.11",
         "smartassert/doctrine-inspectors": "^1.2",

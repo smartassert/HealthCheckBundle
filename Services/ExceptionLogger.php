@@ -7,10 +7,10 @@ namespace SmartAssert\HealthCheckBundle\Services;
 use SmartAssert\InvokableLogger\ExceptionLogger as InvokableExceptionLogger;
 use SmartAssert\ServiceStatusInspector\ExceptionHandlerInterface;
 
-class ExceptionLogger implements ExceptionHandlerInterface
+readonly class ExceptionLogger implements ExceptionHandlerInterface
 {
     public function __construct(
-        private readonly InvokableExceptionLogger $invokableExceptionLogger,
+        private InvokableExceptionLogger $invokableExceptionLogger,
     ) {
     }
 

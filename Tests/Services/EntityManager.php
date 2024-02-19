@@ -4,12 +4,25 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Services;
 
+use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Statement;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\NativeQuery;
+use Doctrine\ORM\Proxy\ProxyFactory;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\FilterCollection;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\Persistence\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\UnitOfWork;
 
 class EntityManager implements EntityManagerInterface
 {
@@ -38,21 +51,19 @@ class EntityManager implements EntityManagerInterface
         ;
     }
 
-    public function __call(string $name, array $arguments)
-    {
-    }
-
     public function getMetadataFactory(): ClassMetadataFactory
     {
         return $this->metadataFactory;
     }
 
-    public function getRepository($className)
+    public function getRepository($className): EntityRepository
     {
+        return \Mockery::mock(EntityRepository::class);
     }
 
-    public function getCache()
+    public function getCache(): null
     {
+        return null;
     }
 
     public function getConnection(): Connection
@@ -60,35 +71,154 @@ class EntityManager implements EntityManagerInterface
         return $this->connection;
     }
 
-    public function getExpressionBuilder()
+    public function getExpressionBuilder(): Expr
+    {
+        return \Mockery::mock(Expr::class);
+    }
+
+    public function beginTransaction(): void
     {
     }
 
-    public function beginTransaction()
+    public function commit(): void
     {
     }
 
-    public function transactional($func)
+    public function rollback(): void
     {
     }
 
-    public function commit()
+    public function createQuery($dql = ''): Query
+    {
+        return \Mockery::mock(Query::class);
+    }
+
+    public function createQueryBuilder(): QueryBuilder
+    {
+        return \Mockery::mock(QueryBuilder::class);
+    }
+
+    public function getReference($entityName, $id): null
+    {
+        return null;
+    }
+
+    public function getPartialReference($entityName, $identifier)
     {
     }
 
-    public function rollback()
+    public function close(): void
     {
     }
 
-    public function createQuery($dql = '')
+    public function lock($entity, $lockMode, $lockVersion = null): void
     {
     }
 
-    public function createNamedQuery($name)
+    public function getEventManager(): EventManager
+    {
+        return \Mockery::mock(EventManager::class);
+    }
+
+    public function getConfiguration(): Configuration
+    {
+        return \Mockery::mock(Configuration::class);
+    }
+
+    public function isOpen(): bool
+    {
+        return true;
+    }
+
+    public function getUnitOfWork(): UnitOfWork
+    {
+        return \Mockery::mock(UnitOfWork::class);
+    }
+
+    public function newHydrator($hydrationMode): AbstractHydrator
+    {
+        return \Mockery::mock(AbstractHydrator::class);
+    }
+
+    public function getProxyFactory(): ProxyFactory
+    {
+        return \Mockery::mock(ProxyFactory::class);
+    }
+
+    public function getFilters(): FilterCollection
+    {
+        return \Mockery::mock(FilterCollection::class);
+    }
+
+    public function isFiltersStateClean(): bool
+    {
+        return true;
+    }
+
+    public function hasFilters(): bool
+    {
+        return false;
+    }
+
+    public function getClassMetadata($className): ClassMetadata
+    {
+        return \Mockery::mock(ClassMetadata::class);
+    }
+
+    public function find(
+        string $className,
+        mixed $id,
+        null|int|LockMode $lockMode = null,
+        null|int $lockVersion = null
+    ): null {
+        return null;
+    }
+
+    public function persist($object): void
     {
     }
 
-    public function createNativeQuery($sql, ResultSetMapping $rsm)
+    public function remove($object): void
+    {
+    }
+
+    public function clear($objectName = null): void
+    {
+    }
+
+    public function detach($object): void
+    {
+    }
+
+    public function refresh(object $object, null|int|LockMode $lockMode = null): void
+    {
+    }
+
+    public function flush(): void
+    {
+    }
+
+    public function initializeObject($obj): void
+    {
+    }
+
+    public function contains($object): bool
+    {
+        return false;
+    }
+
+    public function wrapInTransaction(callable $func): mixed
+    {
+        return null;
+    }
+
+    public function createNativeQuery($sql, ResultSetMapping $rsm): NativeQuery
+    {
+        return \Mockery::mock(NativeQuery::class);
+    }
+
+    // doctrine/orm 2.* methods, not used in 3.
+    public function copy($entity, $deep = false)
     {
     }
 
@@ -96,43 +226,7 @@ class EntityManager implements EntityManagerInterface
     {
     }
 
-    public function createQueryBuilder()
-    {
-    }
-
-    public function getReference($entityName, $id)
-    {
-    }
-
-    public function getPartialReference($entityName, $identifier)
-    {
-    }
-
-    public function close()
-    {
-    }
-
-    public function copy($entity, $deep = false)
-    {
-    }
-
-    public function lock($entity, $lockMode, $lockVersion = null)
-    {
-    }
-
-    public function getEventManager()
-    {
-    }
-
-    public function getConfiguration()
-    {
-    }
-
-    public function isOpen()
-    {
-    }
-
-    public function getUnitOfWork()
+    public function createNamedQuery($name)
     {
     }
 
@@ -140,67 +234,7 @@ class EntityManager implements EntityManagerInterface
     {
     }
 
-    public function newHydrator($hydrationMode)
-    {
-    }
-
-    public function getProxyFactory()
-    {
-    }
-
-    public function getFilters()
-    {
-    }
-
-    public function isFiltersStateClean()
-    {
-    }
-
-    public function hasFilters()
-    {
-    }
-
-    public function getClassMetadata($className)
-    {
-    }
-
-    public function find($className, $id)
-    {
-    }
-
-    public function persist($object)
-    {
-    }
-
-    public function remove($object)
-    {
-    }
-
-    public function merge($object)
-    {
-    }
-
-    public function clear($objectName = null)
-    {
-    }
-
-    public function detach($object)
-    {
-    }
-
-    public function refresh($object)
-    {
-    }
-
-    public function flush()
-    {
-    }
-
-    public function initializeObject($obj)
-    {
-    }
-
-    public function contains($object)
+    public function transactional($func)
     {
     }
 }

@@ -8,7 +8,7 @@ on:
 
 jobs:
   phpstan:
-    name: PHPStan - PHP ${{ matrix.php }} symfony/${{ matrix.symfony }}
+    name: PHPStan - PHP ${{ matrix.php }} symfony/${{ matrix.symfony }} doctrine/orm ${{ matrix.doctrine-orm }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]

@@ -19,7 +19,7 @@ jobs:
         run: composer cs-fixer-dry-run
 
   phpcs:
-    name: PHPCS - PHP ${{ matrix.php }} symfony/${{ matrix.symfony }}
+    name: PHPCS - PHP ${{ matrix.php }} symfony/${{ matrix.symfony }} doctrine/orm ${{ matrix.doctrine-orm }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]

@@ -43,6 +43,8 @@ class HealthCheckExtension extends Extension
         $metadata = $metadataCollection[(new HealthCheckBundle())->getName()] ?? [];
         $metadata = is_array($metadata) ? $metadata : [];
 
-        return $metadata['path'] ?? '';
+        $path = $metadata['path'] ?? '';
+
+        return is_string($path) ? $path : '';
     }
 }

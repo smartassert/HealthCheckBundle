@@ -15,7 +15,10 @@ abstract class AbstractBaseFunctionalTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->kernel = new TestingKernel($_ENV['APP_ENV']);
+        $environment = $_ENV['APP_ENV'] ?? 'test';
+        $environment = is_string($environment) ? $environment : 'test';
+
+        $this->kernel = new TestingKernel($environment);
         $this->kernel->boot();
     }
 }

@@ -169,7 +169,7 @@ class EntityManager implements EntityManagerInterface
         string $className,
         mixed $id,
         null|int|LockMode $lockMode = null,
-        null|int $lockVersion = null
+        ?int $lockVersion = null
     ): null {
         return null;
     }

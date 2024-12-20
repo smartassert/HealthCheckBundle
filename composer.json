@@ -49,7 +49,7 @@
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "doctrine/orm": "^2 || ^3",
+        "doctrine/orm": "^3",
         "smartassert/doctrine-inspectors": "^3.0",
         "smartassert/invokable-logger": "^0.3.0",
         "smartassert/service-status-inspector": "^6.0",

@@ -237,4 +237,9 @@ class EntityManager implements EntityManagerInterface
     public function transactional($func)
     {
     }
+
+    public function isUninitializedObject(mixed $value): bool
+    {
+        return false;
+    }
 }

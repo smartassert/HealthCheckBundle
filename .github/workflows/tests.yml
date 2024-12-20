@@ -8,13 +8,12 @@ on:
 
 jobs:
   unit:
-    name: PHPUnit tests - PHP ${{ matrix.php }}
+    name: PHPUnit tests - PHP ${{ matrix.php }}  symfony/${{ matrix.symfony }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
         php: ['8.2', '8.3']
-        symfony: ['7.0.*']
-        doctrine-orm: ['^3']
+        symfony: ['7.0.*', '7.1.*', '7.2.*']
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -28,7 +27,9 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: |
+          sed -i 's/"\^7.0 || \^7.1 || \^7.2"/\"${{ matrix.symfony }}"/g' composer.json
+          composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run tests
         run: composer test-ci

@@ -53,15 +53,15 @@ services:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - setComponentStatusInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.health_check' }]
-      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.health_check' }]
+      - setComponentStatusInspectors: [!tagged_iterator  { tag: 'health_check_bundle.component_inspector.health_check' }]
+      - setExceptionHandlers: [!tagged_iterator { tag: 'health_check_bundle.exception_logger.health_check' }]
 
   smartassert.health_check_bundle.service_status_inspector.status:
     class: SmartAssert\ServiceStatusInspector\ServiceStatusInspector
     public: true
     calls:
-      - setComponentStatusInspectors: [!tagged { tag: 'health_check_bundle.component_inspector.status' }]
-      - setExceptionHandlers: [!tagged { tag: 'health_check_bundle.exception_logger.status' }]
+      - setComponentStatusInspectors: [!tagged_iterator { tag: 'health_check_bundle.component_inspector.status' }]
+      - setExceptionHandlers: [!tagged_iterator { tag: 'health_check_bundle.exception_logger.status' }]
 
   smartassert.health_check_bundle.component_inspectors.readiness:
     class: SmartAssert\ServiceStatusInspector\ComponentStatusInspector

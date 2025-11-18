@@ -168,7 +168,7 @@ class EntityManager implements EntityManagerInterface
     public function find(
         string $className,
         mixed $id,
-        null|int|LockMode $lockMode = null,
+        int|LockMode|null $lockMode = null,
         ?int $lockVersion = null
     ): null {
         return null;
@@ -190,7 +190,7 @@ class EntityManager implements EntityManagerInterface
     {
     }
 
-    public function refresh(object $object, null|int|LockMode $lockMode = null): void
+    public function refresh(object $object, int|LockMode|null $lockMode = null): void
     {
     }
 

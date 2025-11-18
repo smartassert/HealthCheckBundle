@@ -18,8 +18,7 @@ class ExpectedStatusOutputFactory
         private readonly string $environment,
         private readonly bool $isReadyParameter,
         private readonly string $versionParameter,
-    ) {
-    }
+    ) {}
 
     /**
      * @return string[]

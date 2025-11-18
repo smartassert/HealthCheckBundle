@@ -19,11 +19,12 @@ jobs:
         run: composer cs-fixer-dry-run
 
   phpcs:
-    name: PHPCS - PHP ${{ matrix.php }}
+    name: PHPCS - PHP ${{ matrix.php }} doctrine/orm ${{ matrix.doctrine-orm }}
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
         php: ['8.4']
+        doctrine-orm: ['^3', '^4']
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -37,7 +38,9 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: |
+          sed -i 's/"\^3 || \^4"/\"${{ matrix.doctrine-orm }}"/g' composer.json
+          composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run
         run: composer cs-phpcs

@@ -9,6 +9,10 @@ on:
 jobs:
   php-cs-fixer:
     name: PHP CS Fixer Dry Run
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php: ['8.4']
     runs-on: ubuntu-latest
 
     steps:

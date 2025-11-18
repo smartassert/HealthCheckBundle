@@ -9,14 +9,23 @@ on:
 jobs:
   php-cs-fixer:
     name: PHP CS Fixer Dry Run
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php: ['8.4']
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Run
-        run: composer cs-fixer-dry-run
+      - name: Setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
   phpcs:
     name: PHPCS - PHP ${{ matrix.php }}

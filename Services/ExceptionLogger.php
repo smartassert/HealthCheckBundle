@@ -11,8 +11,7 @@ readonly class ExceptionLogger implements ExceptionHandlerInterface
 {
     public function __construct(
         private InvokableExceptionLogger $invokableExceptionLogger,
-    ) {
-    }
+    ) {}
 
     public function handle(\Throwable $exception): void
     {

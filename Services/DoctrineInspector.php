@@ -13,8 +13,7 @@ readonly class DoctrineInspector implements ComponentStatusInspectorInterface
     public function __construct(
         private EntityMappingInspector|QueryInspector $inspector,
         private string $identifier,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): bool
     {

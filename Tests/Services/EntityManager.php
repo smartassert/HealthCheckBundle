@@ -76,17 +76,11 @@ class EntityManager implements EntityManagerInterface
         return \Mockery::mock(Expr::class);
     }
 
-    public function beginTransaction(): void
-    {
-    }
+    public function beginTransaction(): void {}
 
-    public function commit(): void
-    {
-    }
+    public function commit(): void {}
 
-    public function rollback(): void
-    {
-    }
+    public function rollback(): void {}
 
     public function createQuery($dql = ''): Query
     {
@@ -103,17 +97,11 @@ class EntityManager implements EntityManagerInterface
         return null;
     }
 
-    public function getPartialReference($entityName, $identifier)
-    {
-    }
+    public function getPartialReference($entityName, $identifier) {}
 
-    public function close(): void
-    {
-    }
+    public function close(): void {}
 
-    public function lock($entity, $lockMode, $lockVersion = null): void
-    {
-    }
+    public function lock($entity, $lockMode, $lockVersion = null): void {}
 
     public function getEventManager(): EventManager
     {
@@ -174,33 +162,19 @@ class EntityManager implements EntityManagerInterface
         return null;
     }
 
-    public function persist($object): void
-    {
-    }
+    public function persist($object): void {}
 
-    public function remove($object): void
-    {
-    }
+    public function remove($object): void {}
 
-    public function clear($objectName = null): void
-    {
-    }
+    public function clear($objectName = null): void {}
 
-    public function detach($object): void
-    {
-    }
+    public function detach($object): void {}
 
-    public function refresh(object $object, int|LockMode|null $lockMode = null): void
-    {
-    }
+    public function refresh(object $object, int|LockMode|null $lockMode = null): void {}
 
-    public function flush(): void
-    {
-    }
+    public function flush(): void {}
 
-    public function initializeObject($obj): void
-    {
-    }
+    public function initializeObject($obj): void {}
 
     public function contains($object): bool
     {
@@ -218,25 +192,15 @@ class EntityManager implements EntityManagerInterface
     }
 
     // doctrine/orm 2.* methods, not used in 3.
-    public function copy($entity, $deep = false)
-    {
-    }
+    public function copy($entity, $deep = false) {}
 
-    public function createNamedNativeQuery($name)
-    {
-    }
+    public function createNamedNativeQuery($name) {}
 
-    public function createNamedQuery($name)
-    {
-    }
+    public function createNamedQuery($name) {}
 
-    public function getHydrator($hydrationMode)
-    {
-    }
+    public function getHydrator($hydrationMode) {}
 
-    public function transactional($func)
-    {
-    }
+    public function transactional($func) {}
 
     public function isUninitializedObject(mixed $value): bool
     {

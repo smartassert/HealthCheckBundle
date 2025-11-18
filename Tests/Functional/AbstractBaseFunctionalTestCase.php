@@ -21,4 +21,9 @@ abstract class AbstractBaseFunctionalTestCase extends TestCase
         $this->kernel = new TestingKernel($environment);
         $this->kernel->boot();
     }
+
+    protected function tearDown(): void
+    {
+        restore_exception_handler();
+    }
 }

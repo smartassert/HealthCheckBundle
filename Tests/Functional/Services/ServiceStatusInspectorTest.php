@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace SmartAssert\HealthCheckBundle\Tests\Functional\Services;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use SmartAssert\HealthCheckBundle\Tests\Functional\AbstractBaseFunctionalTestCase;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspector;
 use SmartAssert\ServiceStatusInspector\ServiceStatusInspectorInterface;
 
 class ServiceStatusInspectorTest extends AbstractBaseFunctionalTestCase
 {
-    /**
-     * @dataProvider serviceIsRetrievedFromContainerDataProvider
-     */
+    #[DataProvider('serviceIsRetrievedFromContainerDataProvider')]
     public function testServiceIsRetrievedFromContainer(string $serviceId): void
     {
         $service = $this->kernel->getContainer()->get($serviceId);

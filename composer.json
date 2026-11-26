@@ -70,7 +70,7 @@
         "symfony/framework-bundle": "*",
         "symfony/monolog-bundle": "^4",
         "symfony/routing": "*",
-        "webignition/object-reflector": "^1.0"
+        "webignition/object-reflector": "^2.0"
     },
     "config": {
         "sort-packages": true,
